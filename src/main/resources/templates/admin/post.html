@@ -1,0 +1,82 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div style="display: inline-block;margin-left: 15%;">
+
+    <form id="form" enctype="multipart/form-data">
+        <label for="image" class="form-label">Image:</label>
+        <img style="height:81px;width:81px;" th:src="${model}?@{'/web/assets/img/'+${model.image}}:''">
+        <input type="file" id="image" name="file" />
+        <br>
+
+        <label style="display: block;" class="form-label">Name:</label>
+        <textarea style="width: 500px; height: 100px" name="name" id="name"
+            th:text="${model}?${model.name}:''"></textarea>
+        <br>
+
+        <label>Price:</label>
+        <input type="number" id="price" name="price" th:value="${model}?${model.price}:''">
+
+        <input type="hidden" name="id" th:value="${model}?${model.id}:''">
+
+        <div th:switch="${model}">
+            <button th:case="null" id="addItem" class="btn btn-primary" type="submit">Add</button>
+            <button th:case="*" id="updateItem" class="btn btn-primary" type="submit">Update</button>
+        </div>
+
+    </form>
+
+    <div>
+        <a href="/admin" type="button" class="btn btn-secondary">Hủy</a>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+        $("#addItem").click(function (e) {
+            e.preventDefault()
+            var formdt = new FormData($("#form")[0]);
+            swtAlert("Do you really want add item?", formdt, function ajaxAddItem(data) {
+                $.ajax({
+                    url: "/api/product",
+                    type: "POST",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function () {
+                        swal("Poof! Your prodcut has been added!", {
+                            icon: "success",
+                        }).then((value) => {
+                            location.reload(true)
+                        })
+                    },
+                    error: function () {
+                        swal("The process failed!", {
+                            icon: "error",
+                        })
+                    }
+                })
+            })
+        })
+
+        $("#updateItem").click(function (e) {
+            e.preventDefault()
+            var formdt = new FormData($("#form")[0]);
+            swtAlert("Do you really want update item?", formdt, function ajaxUpdateItem(data) {
+                $.ajax({
+                    url: "/api/product",
+                    type: "PUT",
+                    contentType: false,
+                    processData: false,
+                    data: formdt,
+                    success: function () {
+                        swal("Poof! Your prodcut has been updated!", {
+                            icon: "success",
+                        }).then((value) => {
+                            location.reload(true)
+                        })
+                    },
+                    error: function () {
+                        swal("The process failed!", {
+                            icon: "error",
+                        })
+                    }
+                })
+            })
+        })
+    </script>

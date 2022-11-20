@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/components :: head('Shop')">
+</head>
+<body>
+	<div th:replace="fragments/components :: navbar"></div>
+	<div th:replace="fragments/components :: header"></div>
+
+
+	<!-- Start Content -->
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-lg-3">
+				<h1 class="h2 pb-4">Categories</h1>
+				<ul class="list-unstyled templatemo-accordion">
+					<th:block th:each="cate:${categorys}">
+						<li class="pb-3"><a
+							class="collapsed d-flex justify-content-between h3 text-decoration-none"
+							th:href="@{/shop(id=${cate.id})}"><p th:text="${cate.name}"></p>
+						</a></li>
+					</th:block>
+
+				</ul>
+			</div>
+
+			<div class="col-lg-9">
+				<div class="row">
+					<div class="col-md-6 pb-4">
+						<div class="d-flex">
+							<select class="form-control">
+								<option>0->$100</option>
+								<option>$100->$500</option>
+								<option>$500->$1000</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+
+					<th:block th:each="prod:${products}">
+						<div class="col-md-4">
+							<div class="card mb-4 product-wap rounded-0">
+								<div class="card rounded-0">
+									<img class="card-img rounded-0 img-fluid"
+										th:src="@{'/web/assets/img/'+${prod.image}}">
+									<div
+										class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+										<ul class="list-unstyled">
+											<li><a class="btn btn-success text-white"
+												href="shop-single.html"><i class="far fa-heart"></i></a></li>
+											<li><a class="btn btn-success text-white mt-2"
+												href="shop-single.html"><i class="far fa-eye"></i></a></li>
+											<li><a class="btn btn-success text-white mt-2"
+												th:href="@{/cart/add(id=${prod.id})}"><i
+													class="fas fa-cart-plus"></i></a></li>
+										</ul>
+									</div>
+								</div>
+								<div class="card-body">
+									<a href="shop-single.html" class="h3 text-decoration-none">
+										<h6 th:text="${prod.name}"></h6>
+									</a>
+									<ul
+										class="w-100 list-unstyled d-flex justify-content-between mb-0">
+										<li>M/L/X/XL</li>
+										<li class="pt-2"><span
+											class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+											<span
+											class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+											<span
+											class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+											<span
+											class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+											<span
+											class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+										</li>
+									</ul>
+									<ul class="list-unstyled d-flex justify-content-center mb-1">
+										<li><i class="text-warning fa fa-star"></i> <i
+											class="text-warning fa fa-star"></i> <i
+											class="text-warning fa fa-star"></i> <i
+											class="text-muted fa fa-star"></i> <i
+											class="text-muted fa fa-star"></i></li>
+									</ul>
+									<p class="text-center mb-0" th:text="${prod.price}"></p>
+								</div>
+							</div>
+						</div>
+					</th:block>
+
+					<ul class="pagination" id="pagination"></ul>
+				</div>
+
+			</div>
+		</div>
+		<!-- End Content -->
+	</div>
+	<form action="/shop" method="GET" id="formPagi">
+		<input type="hidden" id="page" name="page" value=""> <input
+			type="hidden" id="size" name="size" value=""> <input
+			type="hidden" name="id" th:value="${idCate}">
+	</form>
+	<div th:replace="fragments/components :: footer"></div>
+	<div th:replace="fragments/components :: scripts"></div>
+
+	<script type="text/javascript" th:inline="javascript">
+		var limit = 6;
+		var totalPages;
+		var currentPage =[[${currentPage}]];
+		var totalProducts = [[${allProducts.size()}]];
+		
+		if(totalProducts % limit == 0){
+   		 	totalPages = totalProducts / limit;
+		}else{
+    		totalPages = Math.floor(totalProducts / limit + 1);
+		}
+		
+		$(function () {
+		window.pagObj = $('#pagination').twbsPagination({
+				totalPages: totalPages,
+				visiblePages: 2,
+				startPage: currentPage,	
+				onPageClick: function (event, page) {
+				if(page != currentPage){
+					$('#page').val(page)
+					$('#size').val(limit)
+					$('#formPagi').submit()
+				}	
+				}
+			})
+			});
+			
+
+		</script>
+</body>
+
+</html>
