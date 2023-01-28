@@ -2,6 +2,9 @@ package com.clotheshop.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.clotheshop.entities.Photo;
 import com.clotheshop.entities.Product;
 
 public interface IProductService {
@@ -13,8 +16,14 @@ public interface IProductService {
 
 	void deleteOne(Long id);
 
-	void addAndUpdateOne(Product entity);
+	Product addAndUpdateOne(Product entity);
 
 	List<Product> findByCategory(Long idCate);
+	
+	List<Product> findHots();
+	
+	List<Photo> findPhotos(Long id);
+	
+	int countItemInCart(HttpServletRequest req);
 
 }

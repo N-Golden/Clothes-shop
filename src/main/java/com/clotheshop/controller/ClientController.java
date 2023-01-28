@@ -23,6 +23,7 @@ public class ClientController {
 	@GetMapping("/")
 	public String index(Model model) {
 		model.addAttribute("categorys", categoryService.findAll());
+		model.addAttribute("hotProducts", productService.findHots());
 		return "web/index";
 	}
 
@@ -33,8 +34,7 @@ public class ClientController {
 
 	@GetMapping("/shop")
 	public String shop(Model model, @RequestParam(defaultValue = "1") Integer page,
-			@RequestParam(defaultValue = "6") Integer size, @RequestParam(defaultValue = "1") Long id) {
-
+			@RequestParam(defaultValue = "9") Integer size, @RequestParam(defaultValue = "1") Long id) {
 		model.addAttribute("allProducts", productService.findByCategory(id));
 		model.addAttribute("categorys", categoryService.findAll());
 		model.addAttribute("products", productService.findPagination(id, page, size));

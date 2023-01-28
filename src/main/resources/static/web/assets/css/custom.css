@@ -1,3 +1,46 @@
 /*
 Custom Css
 */
+.img-custom {
+	width: 100%;
+	height: 100%;
+}
+
+.threedot {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+#multi-item-example {
+	width: 100%;
+	text-align: center;
+}
+
+.cate {
+	font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+	border-bottom: 1px solid #ccc;
+	width: 219px;
+}
+
+.cate:last-child {
+	border: none;
+}
+
+.cate a {
+	text-decoration: none; /*  */
+	color: #000;
+	display: block;
+	width: 219px;
+	padding-top: 20px; padding-bottom : 20px;
+	-webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+	-moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+	-o-transition: font-size 0.3s ease, background-color 0.3s ease;
+	-ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+	transition: font-size 0.3s ease, background-color 0.3s ease;
+	padding-bottom: 20px;
+}
+
+.cate a:hover {
+	background: #f6f6f6;
+}

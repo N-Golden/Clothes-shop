@@ -1,11 +1,13 @@
 package com.clotheshop.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,32 +35,41 @@ public class productAPI {
 //	}
 
 	@DeleteMapping("/api/product")
-	public boolean deleteProduct(@RequestBody long[] arrId) {
-		for (long id : arrId) {
-			service.deleteOne(id);
-			return true;
+	public ResponseEntity<String> deleteProduct(@RequestBody long[] arrId) {
+		try {
+			for (long id : arrId) {
+				service.deleteOne(id);
+			}
+			HttpHeaders httpHeaders = new HttpHeaders();
+			return new ResponseEntity<>("Product is deleted successfully", httpHeaders, HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<>("Data is not found", HttpStatus.NOT_FOUND);
 		}
-		return false;
 	}
 
-	@PostMapping("/api/product")
-	public void addProduct(@RequestParam MultipartFile file, String name, Double price) {
+	@PostMapping("/api/product/post")
+	public ResponseEntity<Product> addProduct(@RequestPart MultipartFile file, String name, String price) {
 		String fileName = saveFileUtils.saveFile(file);
+		String newPrice = price.subSequence(0, price.length()-3) +"."+ price.substring(price.length()-3, price.length());
 		Product entity = new Product();
-		entity.setImage(fileName);
+		entity.setThumbnail(fileName);
 		entity.setName(name);
-		entity.setPrice(price);
+		entity.setPrice(newPrice);
 		service.addAndUpdateOne(entity);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 
-	@PutMapping("/api/product")
-	public void updateProduct(@RequestParam(required = false) MultipartFile file, String name, Double price, Long id) {
+	@PostMapping("/api/product/update")
+	public ResponseEntity<Product> updateProduct(@RequestPart(required = false) MultipartFile file, String name, String price, Long id) {
 		String fileName = saveFileUtils.saveFile(file);
+		
 		Product entity = service.findOne(id);
-		entity.setImage(fileName);
+		entity.setThumbnail(fileName);
 		entity.setName(name);
 		entity.setPrice(price);
 		service.addAndUpdateOne(entity);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 
 }

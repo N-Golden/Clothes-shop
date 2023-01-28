@@ -28,11 +28,11 @@
                   	<div class="row mb-4 d-flex justify-content-between align-items-center">
                     <div class="col-md-2 col-lg-2 col-xl-2">
                       <img
-                        th:src="@{'/web/assets/img/'+${prod.image}}"
+                        th:src="@{'/web/assets/img/'+${prod.thumbnail}}+'.jpg'"
                         class="img-fluid rounded-3" alt="Cotton T-shirt">
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3">
-                      <h6 class="text-muted">Shirt</h6>
+                      <h6 class="text-muted">Giày</h6>
                       <h6 class="text-black mb-0" th:text="${prod.name}"></h6>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">

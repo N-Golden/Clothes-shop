@@ -23,7 +23,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		authorities.forEach(authority -> {
 			if (authority.getAuthority().equals("USER")) {
 				try {
-					response.sendRedirect("/");
+					response.sendRedirect("/shop");
 				} catch (Exception e) {
 				}
 			} else if (authority.getAuthority().equals("ADMIN")) {

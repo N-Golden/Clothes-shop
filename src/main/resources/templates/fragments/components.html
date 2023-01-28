@@ -35,8 +35,9 @@
 						href="tel:010-020-0340">010-020-0340</a>
 				</div>
 				<div>
-					<a href="/login" class="btn btn-light" role="button" aria-pressed="true">LOGIN</a>
-					<a href="/logout" class="btn btn-light" role="button" aria-pressed="true">LOGOUT</a>
+					<a href="/login" class="btn btn-light" role="button"
+						aria-pressed="true">LOGIN</a> <a href="/logout"
+						class="btn btn-light" role="button" aria-pressed="true">LOGOUT</a>
 				</div>
 			</div>
 		</div>
@@ -65,8 +66,7 @@
 				<div class="flex-fill">
 					<ul
 						class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-						<li class="nav-item"><a class="nav-link" href="/">Home</a>
-						</li>
+						<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 						<li class="nav-item"><a class="nav-link" href="/about">About</a>
 						</li>
 						<li class="nav-item"><a class="nav-link" href="/shop">Shop</a>
@@ -86,11 +86,14 @@
 							</div>
 						</div>
 					</div>
-					 <a class="nav-icon position-relative text-decoration-none"
-						href="/cart"> <i
-						class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i> 
-					</a> 
-				
+					<form class="d-flex" action="/cart">
+						<button class="btn btn-outline-dark" type="submit">
+							<i class="fa fa-fw fa-cart-arrow-down mr-1"></i> Cart 
+							<span class="badge bg-dark text-white ms-1 rounded-pill" th:text="${session.count}"></span>
+						</button>
+					</form>
+
+
 				</div>
 			</div>
 
@@ -196,10 +199,7 @@
 			<div class="container">
 				<div class="row pt-2">
 					<div class="col-12">
-						<p class="text-left text-light">
-							Copyright &copy; 2021 Company Name | Designed by <a
-								rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
-						</p>
+						<p class="text-left text-light">2022 ZAYSHOP</p>
 					</div>
 				</div>
 			</div>
@@ -215,7 +215,8 @@
 		<script th:src="@{/web/assets/js/bootstrap.bundle.min.js}"></script>
 		<script th:src="@{/web/assets/js/templatemo.js}"></script>
 		<script th:src="@{/web/assets/js/custom.js}"></script>
-		<script th:src="@{/web/assets/pagination/jquery.twbsPagination.min.js}"></script>
+		<script
+			th:src="@{/web/assets/pagination/jquery.twbsPagination.min.js}"></script>
 		<!-- End Script -->
 	</div>
 </body>

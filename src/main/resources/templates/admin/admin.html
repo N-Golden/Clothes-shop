@@ -57,14 +57,13 @@
             <li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse"
                     data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i
                         class="fas fa-fw fa-cog"></i> <span>Quản
-                        lý áo</span>
+                        lý giày</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
+                        <h6 class="collapse-header">Thành phần chỉnh sửa:</h6>
 
-                        <a class="collapse-item" href="/admin">Danh sách
-                            áo</a> </div> </div> </li> <!-- Nav Item - Utilities Collapse Menu -->
+                        <a class="collapse-item" href="/admin">Danh sách</a> </div> </div> </li> <!-- Nav Item - Utilities Collapse Menu -->
 
         </ul>
         <!-- End of navbar -->
@@ -125,14 +124,14 @@
 
                     <form action="" id="formSubmit" method="GET">
                         <div class="container contentMain">
-                            <h2>Danh sách Áo</h2>
+                            <h2>Danh sách giày</h2>
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox"></th>
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        <th>Edit</th>
+                                        <th>Ảnh</th>
+                                        <th>Tên</th>
+                                        <th>Chỉnh sửa</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -142,7 +141,7 @@
                                             <td><input name="idProds" type="checkbox" th:value="${prod.id}"></td>
                                             <td><img style="height:81px;width:81px; "
                                                     class="card-img rounded-0 img-fluid"
-                                                    th:src="@{'/web/assets/img/'+${prod.image}}"></td>
+                                                    th:src="@{'/web/assets/img/'+${prod.thumbnail}}+'.jpg'"></td>
                                             <td th:text="${prod.name}"></td>
                                             <td>
                                                 <a class="btn btn-success btn-sm rounded-0 edit" type="button"
@@ -204,25 +203,25 @@
                         arrProds.push($(this).val());
                     })
 
-                    swtAlert("Do you really want add item?", arrProds, function ajaxAddItem(data) {
+                    swtAlert("Bạn có thật sự muốn xóa sản phẩm?", arrProds, function ajaxAddItem(data) {
                         $.ajax({
                             url: "/api/product",
                             type: "DELETE",
                             contentType: "application/json",
                             data: JSON.stringify(data),
                             success: function (result) {
-                                if (result == true) {
-                                    swal("Poof! Your data has been deleted!", {
+                                if (result) {
+                                    swal("Xóa thành công??", {
                                         icon: "success",
                                     }).then((value) => {
                                         location.reload(true)
                                     })
                                 } else {
-                                    swal("Please select product want delete")
+                                    swal("Vui lòng chọn sản phẩm")
                                 }
                             },
                             error: function () {
-                                swal("The process failed!", {
+                                swal("Xóa thất bại", {
                                     icon: "error",
                                 })
                             }

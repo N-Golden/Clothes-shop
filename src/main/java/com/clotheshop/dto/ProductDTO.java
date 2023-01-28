@@ -7,17 +7,18 @@ import lombok.Data;
 @Data
 public class ProductDTO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private long id;
 
 	private String name;
 
-	private String shortDescription;
+	private String price;
 
-	private double price;
-
-	private int numStart;
-
-	private String image;
+	private String thumbnail;
 
 	private int category_id;
 

@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -23,7 +24,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class Category implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id // not null and primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto increase
@@ -43,5 +50,13 @@ public class Category implements Serializable {
 
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<Product> products = new ArrayList<>();
+	
 
+	public Category(String name) {
+		super();
+		this.name = name;
+	}
+	
+
+	
 }

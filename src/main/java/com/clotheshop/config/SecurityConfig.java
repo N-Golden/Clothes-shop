@@ -25,9 +25,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll().antMatchers("/").permitAll()
-				.antMatchers("/admin").hasAuthority("ADMIN").antMatchers("/cart/add").hasAuthority("USER")
-				.antMatchers("/cart").hasAuthority("USER").and().formLogin().loginPage("/login")
+		http.csrf().disable().authorizeRequests()
+				.antMatchers(PUBLIC_MATCHERS).permitAll()
+				.antMatchers("/").permitAll()
+				.antMatchers("/admin").hasAuthority("ADMIN")
+				.antMatchers("/cart/add").hasAuthority("USER")
+				.antMatchers("/cart").hasAuthority("USER")
+				.and().formLogin().loginPage("/login")
 				.usernameParameter("email").passwordParameter("password").successHandler(successHandler)
 				.failureUrl("/login?error").and();
 

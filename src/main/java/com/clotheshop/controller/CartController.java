@@ -31,6 +31,7 @@ public class CartController {
 
 	@GetMapping("")
 	public String cart(Model model, HttpSession session) {
+		@SuppressWarnings("unchecked")
 		List<ProductDTO> notes = (List<ProductDTO>) session.getAttribute("CART_SESSION");
 		model.addAttribute("cart", notes);
 		return "web/cart";
@@ -38,14 +39,22 @@ public class CartController {
 
 	@GetMapping("/add")
 	public String addCart(Model model, @RequestParam(required = false) Long id, HttpServletRequest req) {
-		Product p = service.findOne(id);
-		ProductDTO pt = ser1.convertToDo(p);
+
+		@SuppressWarnings("unchecked")
 		List<ProductDTO> notes = (List<ProductDTO>) req.getSession().getAttribute("CART_SESSION");
 		if (notes == null) {
 			notes = new ArrayList<>();
-//	             if notes object is not present in session, set notes in the request session
+//	            if not have session, create it
 			req.getSession().setAttribute("CART_SESSION", notes);
+		}else {
+			for(ProductDTO pd : notes) {
+				if(pd.getId() == id) {
+					return "redirect:/cart";
+				}
+			}
 		}
+		Product p = service.findOne(id);
+		ProductDTO pt = ser1.convertToDo(p);
 		notes.add(pt);
 		req.getSession().setAttribute("CART_SESSION", notes);
 		return "redirect:/cart";
@@ -53,6 +62,7 @@ public class CartController {
 
 	@GetMapping("/delete")
 	public String deleteCart(Model model, @RequestParam Long id, HttpServletRequest req) {
+		@SuppressWarnings("unchecked")
 		List<ProductDTO> notes = (List<ProductDTO>) req.getSession().getAttribute("CART_SESSION");
 		Iterator<ProductDTO> it = notes.iterator();
 		while (it.hasNext()) {
